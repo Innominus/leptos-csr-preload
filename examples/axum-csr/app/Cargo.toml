@@ -1,0 +1,15 @@
+[package]
+name = "axum-csr-preload-app"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[features]
+default = []
+preload-registry = []
+
+[dependencies]
+console_error_panic_hook.workspace = true
+leptos.workspace = true
+leptos_csr_preload = { path = "../../../crates/leptos_csr_preload" }
+leptos_router.workspace = true

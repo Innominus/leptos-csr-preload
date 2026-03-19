@@ -1,0 +1,5 @@
+error: supported arguments: `name = ...`, `preload`, `preload_path = "..."`, `preload_paths = ["...", ...]`
+ --> tests/ui/lazy_invalid_argument.rs:3:8
+  |
+3 | #[lazy(route = inventory_route)]
+  |        ^^^^^

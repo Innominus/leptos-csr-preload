@@ -1,0 +1,17 @@
+error: missing `view` method on LazyRoute impl
+  --> tests/ui/lazy_route_missing_view.rs:8:1
+   |
+ 8 | / impl LazyRoute for MissingViewRoute {
+ 9 | |     fn data() -> Self {
+10 | |         Self
+11 | |     }
+12 | | }
+   | |_^
+
+warning: unused import: `leptos_router::LazyRoute`
+ --> tests/ui/lazy_route_missing_view.rs:2:5
+  |
+2 | use leptos_router::LazyRoute;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default

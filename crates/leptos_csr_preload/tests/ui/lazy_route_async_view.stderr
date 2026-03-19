@@ -1,0 +1,19 @@
+error: `view` method should not be async
+  --> tests/ui/lazy_route_async_view.rs:14:5
+   |
+14 |     async fn view(_this: Self) -> AnyView {
+   |     ^^^^^
+
+warning: unused import: `leptos::prelude::*`
+ --> tests/ui/lazy_route_async_view.rs:1:5
+  |
+1 | use leptos::prelude::*;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `leptos_router::LazyRoute`
+ --> tests/ui/lazy_route_async_view.rs:3:5
+  |
+3 | use leptos_router::LazyRoute;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^

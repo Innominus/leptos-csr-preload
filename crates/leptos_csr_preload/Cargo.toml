@@ -1,0 +1,27 @@
+[package]
+name = "leptos_csr_preload"
+edition.workspace = true
+license.workspace = true
+readme = "README.md"
+version.workspace = true
+
+[features]
+default = []
+axum = ["dep:axum", "dep:tokio", "dep:tower", "dep:tower-http"]
+
+[dependencies]
+axum = { workspace = true, optional = true }
+inventory.workspace = true
+leptos_csr_preload_macros = { path = "../leptos_csr_preload_macros" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tokio = { workspace = true, optional = true }
+tower = { workspace = true, optional = true }
+tower-http = { workspace = true, optional = true }
+
+[dev-dependencies]
+leptos.workspace = true
+leptos_router.workspace = true
+tempfile = "3.20.0"
+trybuild = "1.0.112"

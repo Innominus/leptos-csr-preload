@@ -1,0 +1,15 @@
+[package]
+name = "axum-csr-preload-server"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+anyhow = "1.0.98"
+axum.workspace = true
+axum-csr-preload-app = { path = "../app", features = ["preload-registry"] }
+leptos_csr_preload = { path = "../../../crates/leptos_csr_preload", features = ["axum"] }
+tokio.workspace = true
+
+[dev-dependencies]
+tower.workspace = true

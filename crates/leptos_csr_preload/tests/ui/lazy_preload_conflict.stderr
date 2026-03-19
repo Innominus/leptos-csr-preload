@@ -1,0 +1,5 @@
+error: `preload` is mutually exclusive with `preload_path` and `preload_paths`
+ --> tests/ui/lazy_preload_conflict.rs:4:10
+  |
+4 | async fn load_inventory_seed() -> Vec<String> {
+  |          ^^^^^^^^^^^^^^^^^^^

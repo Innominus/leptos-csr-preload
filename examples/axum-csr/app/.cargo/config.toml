@@ -1,0 +1,12 @@
+[unstable]
+build-std = ["std", "panic_abort", "core", "alloc"]
+
+[target.wasm32-unknown-unknown]
+rustflags = ["-C", "panic=abort", "-Clink-args=--emit-relocs"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+opt-level = "z"
+lto = true
+strip = "debuginfo"
