@@ -18,6 +18,10 @@ split points without a `preload_path` remain normally lazy. The Axum backend loa
 split manifest from `app/dist/`, resolves the current request path to the matching route and
 function split keys, and injects preload tags into the returned `index.html`.
 
+The app also demonstrates client-side speculative preloading after startup. On the home page,
+buttons call the generated `__preload_*` helpers for lazy functions and `LazyRoute::preload()` for
+lazy routes before navigation, so you can warm route chunks on demand even without a backend.
+
 The example also demonstrates `preload_paths = [..]`:
 
 - `AboutRoute` is preloaded for both `/about` and `/info`
@@ -65,3 +69,16 @@ Useful routes:
 - `/reports/2026`
 - `/files/assets/icons/logo.svg`
 - `/users/alice`
+
+Client-side preload example from `app/src/lib.rs`:
+
+```rust
+spawn_local(async {
+    __preload_load_shared_banner().await;
+    __preload_load_reports_summary().await;
+    <ReportsRoute as LazyRoute>::preload().await;
+});
+```
+
+That pattern is useful when you want to preload likely next routes/functions after the first page
+load, on hover, or from an explicit user action.

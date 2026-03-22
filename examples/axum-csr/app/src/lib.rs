@@ -24,6 +24,7 @@ pub fn App() -> impl IntoView {
 
                 <FlatRoutes fallback=|| view! { <p id="not-found">"Not found."</p> }>
                     <Route path=StaticSegment("") view=Home />
+
                     <Route path=StaticSegment("about") view={Lazy::<AboutRoute>::new()} />
                     <Route path=StaticSegment("info") view={Lazy::<AboutRoute>::new()} />
                     <Route path=StaticSegment("inventory") view={Lazy::<InventoryRoute>::new()} />
@@ -39,20 +40,47 @@ pub fn App() -> impl IntoView {
 #[component]
 fn Home() -> impl IntoView {
     let message = RwSignal::new("Not loaded yet.".to_string());
+    let preload_status = RwSignal::new("No speculative preloads have run yet.".to_string());
     let load_global = move |_| {
         message.set("Loading global badge...".to_string());
         spawn_local(async move {
             message.set(load_global_badge().await);
         });
     };
+    let preload_reports = move |_| {
+        preload_status.set("Preloading reports route, summary, and shared banner...".to_string());
+        spawn_local(async move {
+            __preload_load_shared_banner().await;
+            __preload_load_reports_summary().await;
+            <ReportsRoute as LazyRoute>::preload().await;
+            preload_status.set("Reports route warmed before navigation.".to_string());
+        });
+    };
+    let preload_user = move |_| {
+        preload_status.set("Preloading user route and metrics...".to_string());
+        spawn_local(async move {
+            __preload_load_user_metrics().await;
+            <UserRoute as LazyRoute>::preload().await;
+            preload_status.set("User route warmed before navigation.".to_string());
+        });
+    };
 
     view! {
         <section>
             <h1 id="page-title">"Home"</h1>
-            <p id="home-copy">"This page is eagerly loaded."</p>
+            <p id="home-copy">
+                "This page is eagerly loaded. Use the buttons below to preload future lazy routes and functions before you navigate to them."
+            </p>
             <p id="global-badge-message">{move || message.get()}</p>
             <button id="global-badge-load" on:click=load_global>
                 "Load global badge"
+            </button>
+            <p id="preload-status">{move || preload_status.get()}</p>
+            <button id="preload-reports" on:click=preload_reports>
+                "Preload reports route and lazy functions"
+            </button>
+            <button id="preload-user" on:click=preload_user>
+                "Preload user route and metrics"
             </button>
         </section>
     }
